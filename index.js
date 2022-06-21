@@ -1,0 +1,39 @@
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  return a / b;
+}
+
+function operate(operator, a, b) {
+  if (typeof a != 'number' || typeof b != 'number') {
+    return 'Enter a valid number';
+  } else if (typeof operator != 'string') {
+    return 'Enter a valid operator';
+  }
+  switch (operator.toLowerCase()) {
+    case 'add':
+      return add(a, b);
+      break;
+    case 'subtract':
+      return subtract(a, b);
+      break;
+    case 'multiply':
+      return multiply(a, b);
+      break;
+    case 'divide':
+      return divide(a, b);
+      break;
+    default:
+      return 'Operator not found';
+  }
+}
