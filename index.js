@@ -15,27 +15,79 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-  if (typeof a != 'number' || typeof b != 'number') {
-    return 'Enter a valid number';
-  } else if (typeof operator != 'string') {
-    return 'Enter a valid operator';
-  }
   switch (operator.toLowerCase()) {
-    case 'add':
+    case '+':
       return add(a, b);
       break;
-    case 'subtract':
+    case '-':
       return subtract(a, b);
       break;
-    case 'multiply':
+    case '×':
       return multiply(a, b);
       break;
-    case 'divide':
+    case '÷':
       return divide(a, b);
       break;
     default:
       return 'Operator not found';
   }
+}
+
+function isOperator(str) {
+  return str == '+' || str == '-' || str == '×' || str == '÷';
+}
+
+function evalExpression(arr) {
+  if (!arr.some( (elem) => {
+    return isOperator(elem);  
+  })) { 
+    return 'Enter a valid expression: No operator';
+  }
+  
+  let eval = 0;
+  if (typeof arr[0] != 'object') {
+    return 'Enter a valid expression: First input is not a number';
+  } else if (typeof arr[arr.length-1] != 'object') {
+    return 'Enter a valid expression: Last input is not a number';
+  }
+
+  let numArr = [];
+  let numOne = null;
+  let tempOp = '';
+  let numTwo = null;
+  let index = 0;
+  do {
+    if (isOperator(arr[index])) {
+      if (tempOp == '')  { //first operator
+        tempOp = arr[index];
+        numOne = new Number(numArr.join(''));
+        numArr = [];
+      } else if (tempOp != '') { //not first operator; numOne exists
+        numTwo = new Number(numArr.join(''));
+        numOne = operate(tempOp, numOne, numTwo);
+        numArr = [];
+      } 
+    } else{
+      numArr[index] = arr[index];
+    } 
+
+    if (index == arr.length-1) { // last iteration
+      numTwo = new Number(numArr.join(''));
+      numOne = operate(tempOp, numOne, numTwo);
+    }
+    index++;
+  } while (index < arr.length);
+
+  return numOne;
+  /*
+  1.start at first index, add to num array until you hit an operator
+  2.make array a string then a number from string
+  3.save operator to pass into func later
+  4.start at index after operator, add to new num array until you hit an operator
+  or end of array
+  5.operate(operator, firstNum, secondNum);
+  6.keep going until none left
+  */
 }
 
 const input = document.querySelector('input');
@@ -80,4 +132,9 @@ decimalButton.addEventListener('click', () => {
 clearButton.addEventListener('click', () => {
   inputArr = [];
   console.log(inputArr);
+});
+
+enterButton.addEventListener('click', () => {
+  console.log(evalExpression(inputArr));
+  inputArr = [];
 });
