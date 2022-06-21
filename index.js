@@ -115,6 +115,7 @@ numButtons.forEach(button => {
   button.addEventListener('click', () => {
     inputArr.push(new Number(button.textContent));
     console.log(inputArr);
+    input.value = inputArr.join('');
   });
 });
 
@@ -122,20 +123,23 @@ operatorButtons.forEach(button => {
   button.addEventListener('click', () => {
     inputArr.push(button.textContent);
     console.log(inputArr);
+    input.value = inputArr.join('');
   });
 });
 
 decimalButton.addEventListener('click', () => {
   inputArr.push(decimalButton.textContent);
   console.log(inputArr);
+  input.value = inputArr.join('');
 });
 
 clearButton.addEventListener('click', () => {
   inputArr = [];
+  input.value = '';
   console.log(inputArr);
 });
 
 enterButton.addEventListener('click', () => {
-  console.log(evalExpression(inputArr));
-  inputArr = [];
+  input.value = evalExpression(inputArr);
+  inputArr = [new Number(input.value)];
 });
