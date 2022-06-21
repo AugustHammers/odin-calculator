@@ -65,6 +65,7 @@ function evalExpression(arr) {
       } else if (tempOp != '') { //not first operator; numOne exists
         numTwo = new Number(numArr.join(''));
         numOne = operate(tempOp, numOne, numTwo);
+        tempOp = arr[index];
         numArr = [];
       } 
     } else{
