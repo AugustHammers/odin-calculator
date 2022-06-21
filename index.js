@@ -37,3 +37,47 @@ function operate(operator, a, b) {
       return 'Operator not found';
   }
 }
+
+const input = document.querySelector('input');
+const allButtons = Array.from(document.querySelectorAll('.button'));
+
+const numButtons = allButtons.filter(button => {
+  if (button.classList.contains('number')) {
+    return button;
+  }
+});
+
+const operatorButtons = allButtons.filter(button => {
+  if (button.classList.contains('operator')) {
+    return button;
+  }
+})
+
+const decimalButton = document.querySelector('#decimal');
+const enterButton = document.querySelector('#enter');
+const clearButton = document.querySelector('#clear');
+let inputArr = [];
+
+numButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    inputArr.push(new Number(button.textContent));
+    console.log(inputArr);
+  });
+});
+
+operatorButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    inputArr.push(button.textContent);
+    console.log(inputArr);
+  });
+});
+
+decimalButton.addEventListener('click', () => {
+  inputArr.push(decimalButton.textContent);
+  console.log(inputArr);
+});
+
+clearButton.addEventListener('click', () => {
+  inputArr = [];
+  console.log(inputArr);
+});
