@@ -34,26 +34,29 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
+  let ans;
   switch (operator.toLowerCase()) {
     case '+':
       input.value = add(a, b);
-      return add(a, b);
+      ans = add(a, b);
       break;
     case '-':
       input.value = subtract(a, b);
-      return subtract(a, b);
+      ans = subtract(a, b);
       break;
     case '×':
       input.value = multiply(a, b);
-      return multiply(a, b);
+      ans = multiply(a, b);
       break;
     case '÷':
       input.value = divide(a, b);
-      return divide(a, b);
+      ans = divide(a, b);
       break;
     default:
-      return 'Error';
+      ans = 'Error';
   }
+
+  return ans;
 }
 
 function isOperator(str) {
@@ -71,7 +74,6 @@ function evalExpression(arr) {
     return 'Enter a valid expression: No operator';
   }
   
-  let eval = 0;
   if (typeof arr[0] != 'object') {
     return 'Enter a valid expression: First input is not a number';
   } else if (typeof arr[arr.length-1] != 'object') {
@@ -102,6 +104,9 @@ function evalExpression(arr) {
     if (index == arr.length-1) { // last iteration
       numTwo = new Number(numArr.join(''));
       numOne = operate(tempOp, numOne, numTwo);
+      if (!isFinite(numOne)) {
+        return 'Error: Number is not finite';
+      }
     }
     index++;
   } while (index < arr.length);
