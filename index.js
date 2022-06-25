@@ -161,7 +161,8 @@ operatorButtons.forEach(button => {
 });
 
 backspaceButton.addEventListener('click', () => {
-  delete inputArr[inputArr.length-1];
+  inputArr.pop();
+  console.log(inputArr);
   input.value = inputArr.join('');
 });
 
@@ -176,9 +177,8 @@ posNegButton.addEventListener('click', () => {
   }
 
   inputArr.push(new Number(num *= -1));
-  input.value = inputArr.join('');
-
   console.log(inputArr);
+  input.value = inputArr.join('');
 });
 
 enterButton.addEventListener('click', () => {
@@ -194,6 +194,6 @@ decimalButton.addEventListener('click', () => {
 
 clearButton.addEventListener('click', () => {
   inputArr = [];
-  input.value = '';
   console.log(inputArr);
+  input.value = '';
 });
