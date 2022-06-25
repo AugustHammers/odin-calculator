@@ -140,6 +140,7 @@ function evalExpression(arr) {
 
 let inputArr = [];
 
+// button events
 numButtons.forEach(button => {
   button.addEventListener('click', () => {
     inputArr.push(new Number(button.textContent));
@@ -196,4 +197,93 @@ clearButton.addEventListener('click', () => {
   inputArr = [];
   console.log(inputArr);
   input.value = '';
+});
+
+// keyboard events
+document.addEventListener('keyup', (e) => {
+  console.log(e.key);
+
+  switch (e.key) {
+    case '1':
+      inputArr.push(new Number(1));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '2':
+      inputArr.push(new Number(2));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '3':
+      inputArr.push(new Number(3));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '4':
+      inputArr.push(new Number(4));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '5':
+      inputArr.push(new Number(5));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '6':
+      inputArr.push(new Number(6));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '7':
+      inputArr.push(new Number(7));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '8':
+      inputArr.push(new Number(8));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '9':
+      inputArr.push(new Number(9));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '0':
+      inputArr.push(new Number(0));
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '/':
+      inputArr.push('÷');
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '*':
+      inputArr.push('*');
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '-':
+      inputArr.push('-');
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '+':
+      inputArr.push('+');
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case '.':
+      inputArr.push('.');
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
+    case 'Enter':
+      input.value = evalExpression(inputArr);
+      inputArr = [new Number(input.value)];
+      break;
+    default:
+      break;
+  }
 });
