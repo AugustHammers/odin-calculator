@@ -81,7 +81,7 @@ function getLatestNumber(arr){
     }
   }
 
-  return new Number(num.join(''));
+  return num;
 }
 
 function evalExpression(arr) {
@@ -104,10 +104,10 @@ function evalExpression(arr) {
     if (isOperator(arr[index])) {
       if (tempOp == '')  { //first operator
         tempOp = arr[index];
-        numOne = getLatestNumber(numArr);
+        numOne = new Number(getLatestNumber(numArr).join(''));
         numArr = [];
       } else if (tempOp != '') { //not first operator; numOne exists
-        numTwo = getLatestNumber(numArr);
+        numTwo = new Number(getLatestNumber(numArr).join(''));
         numOne = operate(tempOp, numOne, numTwo);  
         tempOp = arr[index];
         numArr = [];
@@ -117,7 +117,7 @@ function evalExpression(arr) {
     } 
 
     if (index == arr.length-1) { // last iteration
-      numTwo = new Number(numArr.join(''));
+      numTwo = new Number(getLatestNumber(numArr).join(''));
       numOne = operate(tempOp, numOne, numTwo);
       if (!isFinite(numOne)) {
         return 'Error: Number is not finite';
@@ -166,16 +166,19 @@ backspaceButton.addEventListener('click', () => {
 });
 
 posNegButton.addEventListener('click', () => {
-  // let num = inputArr[inputArr.length-1];
-  // if (typeof num == 'object') {
-  //   num *= -1;
-  // }
-  // input.value = inputArr.join('');
+  let numArr = getLatestNumber(inputArr);
+  let num = new Number(numArr.join(''));
+  let length = numArr.length; // length to be popped off inputArr
+  let index = inputArr.length - 1;
 
-  //getNumber func - gets number starting at end of inputArray
-  //until operator or beginning
+  for (let i = index; i > index-length; i--) {
+    inputArr.pop();
+  }
 
-  
+  inputArr.push(new Number(num *= -1));
+  input.value = inputArr.join('');
+
+  console.log(inputArr);
 });
 
 enterButton.addEventListener('click', () => {
