@@ -74,13 +74,14 @@ function hasOperator(arr) {
 function getLatestNumber(arr){
   let num = [];
   for (let i = arr.length - 1; i >= 0; i--) {
-    if (typeof arr[i] == 'object') { // if its a number
+    if (typeof arr[i] == 'object' || arr[i] == '.') { // if its a number
       num.unshift(arr[i]);
     } else if (isOperator(arr[i])) {
       break;
     }
   }
 
+  console.log('num from getLatestNumber is' + num);
   return num;
 }
 
@@ -146,6 +147,7 @@ numButtons.forEach(button => {
     inputArr.push(new Number(button.textContent));
     console.log(inputArr);
     input.value = inputArr.join('');
+    button.blur();
   });
 });
 
@@ -158,6 +160,7 @@ operatorButtons.forEach(button => {
     inputArr.push(button.textContent);
     console.log(inputArr);
     input.value = inputArr.join('');
+    button.blur();
   });
 });
 
@@ -165,6 +168,7 @@ backspaceButton.addEventListener('click', () => {
   inputArr.pop();
   console.log(inputArr);
   input.value = inputArr.join('');
+  backspaceButton.blur();
 });
 
 posNegButton.addEventListener('click', () => {
@@ -180,23 +184,28 @@ posNegButton.addEventListener('click', () => {
   inputArr.push(new Number(num *= -1));
   console.log(inputArr);
   input.value = inputArr.join('');
+  posNegButton.blur();
 });
 
 enterButton.addEventListener('click', () => {
   input.value = evalExpression(inputArr);
   inputArr = [new Number(input.value)];
+  console.log(inputArr);
+  enterButton.blur();
 });
 
 decimalButton.addEventListener('click', () => {
   inputArr.push(decimalButton.textContent);
   console.log(inputArr);
   input.value = inputArr.join('');
+  decimalButton.blur();
 });
 
 clearButton.addEventListener('click', () => {
   inputArr = [];
   console.log(inputArr);
   input.value = '';
+  clearButton.blur();
 });
 
 // keyboard events
@@ -279,9 +288,15 @@ document.addEventListener('keyup', (e) => {
       console.log(inputArr);
       input.value = inputArr.join('');
       break;
+    case 'Backspace':
+      inputArr.pop();
+      console.log(inputArr);
+      input.value = inputArr.join('');
+      break;
     case 'Enter':
       input.value = evalExpression(inputArr);
       inputArr = [new Number(input.value)];
+      console.log(inputArr);
       break;
     default:
       break;
