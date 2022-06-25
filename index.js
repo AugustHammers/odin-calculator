@@ -269,7 +269,7 @@ document.addEventListener('keyup', (e) => {
       input.value = inputArr.join('');
       break;
     case '*':
-      inputArr.push('*');
+      inputArr.push('×');
       console.log(inputArr);
       input.value = inputArr.join('');
       break;
