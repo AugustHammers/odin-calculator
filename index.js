@@ -13,8 +13,10 @@ const operatorButtons = allButtons.filter(button => {
   }
 })
 
-const decimalButton = document.querySelector('#decimal');
+const backspaceButton = document.querySelector("#backspace");
+const posNegButton = document.querySelector("#pn");
 const enterButton = document.querySelector('#enter');
+const decimalButton = document.querySelector('#decimal');
 const clearButton = document.querySelector('#clear');
 
 function add(a, b) {
@@ -145,6 +147,18 @@ operatorButtons.forEach(button => {
   });
 });
 
+backspaceButton.addEventListener('click', () => {
+  delete inputArr[inputArr.length-1];
+  input.value = inputArr.join('');
+});
+
+//posNegButton.addEventListener('click');
+
+enterButton.addEventListener('click', () => {
+  input.value = evalExpression(inputArr);
+  inputArr = [new Number(input.value)];
+});
+
 decimalButton.addEventListener('click', () => {
   inputArr.push(decimalButton.textContent);
   console.log(inputArr);
@@ -155,9 +169,4 @@ clearButton.addEventListener('click', () => {
   inputArr = [];
   input.value = '';
   console.log(inputArr);
-});
-
-enterButton.addEventListener('click', () => {
-  input.value = evalExpression(inputArr);
-  inputArr = [new Number(input.value)];
 });
