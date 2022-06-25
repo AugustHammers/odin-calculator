@@ -71,6 +71,19 @@ function hasOperator(arr) {
   });
 }
 
+function getLatestNumber(arr){
+  let num = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (typeof arr[i] == 'object') { // if its a number
+      num.unshift(arr[i]);
+    } else if (isOperator(arr[i])) {
+      break;
+    }
+  }
+
+  return new Number(num.join(''));
+}
+
 function evalExpression(arr) {
   if (!hasOperator(arr)) { 
     return 'Enter a valid expression: No operator';
@@ -91,10 +104,10 @@ function evalExpression(arr) {
     if (isOperator(arr[index])) {
       if (tempOp == '')  { //first operator
         tempOp = arr[index];
-        numOne = new Number(numArr.join(''));
+        numOne = getLatestNumber(numArr);
         numArr = [];
       } else if (tempOp != '') { //not first operator; numOne exists
-        numTwo = new Number(numArr.join(''));
+        numTwo = getLatestNumber(numArr);
         numOne = operate(tempOp, numOne, numTwo);  
         tempOp = arr[index];
         numArr = [];
@@ -152,7 +165,18 @@ backspaceButton.addEventListener('click', () => {
   input.value = inputArr.join('');
 });
 
-//posNegButton.addEventListener('click');
+posNegButton.addEventListener('click', () => {
+  // let num = inputArr[inputArr.length-1];
+  // if (typeof num == 'object') {
+  //   num *= -1;
+  // }
+  // input.value = inputArr.join('');
+
+  //getNumber func - gets number starting at end of inputArray
+  //until operator or beginning
+
+  
+});
 
 enterButton.addEventListener('click', () => {
   input.value = evalExpression(inputArr);
