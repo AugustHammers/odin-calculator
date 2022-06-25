@@ -1,3 +1,22 @@
+const input = document.querySelector('input');
+const allButtons = Array.from(document.querySelectorAll('.button'));
+
+const numButtons = allButtons.filter(button => {
+  if (button.classList.contains('number')) {
+    return button;
+  }
+});
+
+const operatorButtons = allButtons.filter(button => {
+  if (button.classList.contains('operator')) {
+    return button;
+  }
+})
+
+const decimalButton = document.querySelector('#decimal');
+const enterButton = document.querySelector('#enter');
+const clearButton = document.querySelector('#clear');
+
 function add(a, b) {
   return a + b;
 }
@@ -17,19 +36,23 @@ function divide(a, b) {
 function operate(operator, a, b) {
   switch (operator.toLowerCase()) {
     case '+':
+      input.value = add(a, b);
       return add(a, b);
       break;
     case '-':
+      input.value = subtract(a, b);
       return subtract(a, b);
       break;
     case '×':
+      input.value = multiply(a, b);
       return multiply(a, b);
       break;
     case '÷':
+      input.value = divide(a, b);
       return divide(a, b);
       break;
     default:
-      return 'Operator not found';
+      return 'Error';
   }
 }
 
@@ -37,10 +60,14 @@ function isOperator(str) {
   return str == '+' || str == '-' || str == '×' || str == '÷';
 }
 
+function hasOperator(arr) {
+  return arr.some( (elem) => {
+    return isOperator(elem);
+  });
+}
+
 function evalExpression(arr) {
-  if (!arr.some( (elem) => {
-    return isOperator(elem);  
-  })) { 
+  if (!hasOperator(arr)) { 
     return 'Enter a valid expression: No operator';
   }
   
@@ -64,7 +91,7 @@ function evalExpression(arr) {
         numArr = [];
       } else if (tempOp != '') { //not first operator; numOne exists
         numTwo = new Number(numArr.join(''));
-        numOne = operate(tempOp, numOne, numTwo);
+        numOne = operate(tempOp, numOne, numTwo);  
         tempOp = arr[index];
         numArr = [];
       } 
@@ -79,7 +106,7 @@ function evalExpression(arr) {
     index++;
   } while (index < arr.length);
 
-  return numOne;
+  return Math.round(numOne * 10) / 10;
   /*
   1.start at first index, add to num array until you hit an operator
   2.make array a string then a number from string
@@ -91,24 +118,6 @@ function evalExpression(arr) {
   */
 }
 
-const input = document.querySelector('input');
-const allButtons = Array.from(document.querySelectorAll('.button'));
-
-const numButtons = allButtons.filter(button => {
-  if (button.classList.contains('number')) {
-    return button;
-  }
-});
-
-const operatorButtons = allButtons.filter(button => {
-  if (button.classList.contains('operator')) {
-    return button;
-  }
-})
-
-const decimalButton = document.querySelector('#decimal');
-const enterButton = document.querySelector('#enter');
-const clearButton = document.querySelector('#clear');
 let inputArr = [];
 
 numButtons.forEach(button => {
@@ -121,6 +130,10 @@ numButtons.forEach(button => {
 
 operatorButtons.forEach(button => {
   button.addEventListener('click', () => {
+    if (hasOperator(inputArr)) {
+      input.value = evalExpression(inputArr);
+      inputArr = [new Number(input.value)];
+    }
     inputArr.push(button.textContent);
     console.log(inputArr);
     input.value = inputArr.join('');
